@@ -9,6 +9,6 @@ dvc metrics show
 # build and track ML pipelines with DVC 
 ## how to run 
 
-conda create -n test test python = 3.11 -y 
+conda create -n test test python = 3.13 -y 
 conda create test 
 pip install -r requirements.txt 
