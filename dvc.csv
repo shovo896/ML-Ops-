@@ -4,3 +4,8 @@
 # dvc pipeline :
   
   1.data integration 
+  2.data validation 
+  3.data transformation
+  4.model training
+  5.model evaluation
+  6.model deployment
