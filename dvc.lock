@@ -5,28 +5,28 @@ stages:
     deps:
     - path: ml_pipelines_with_DVC/src/data_ingestion.py
       hash: md5
-      md5: cea08919b3eaa3dee864ded8b8e2b602
-      size: 2189
+      md5: fb653c61045c7161fc9bf91f0f80dabd
+      size: 2185
     outs:
     - path: data/raw/test.csv
       hash: md5
-      md5: a2bdbb8889e0b1b400eb611cedd7d651
-      size: 162098
+      md5: 9e8fd40dceb7f954cac7b925b0c17783
+      size: 196306
     - path: data/raw/train.csv
       hash: md5
-      md5: 62b9f0c4e921cec8debb427edfc9cb67
-      size: 655499
+      md5: 0a781ce1bdaba1a4f4dfe7948ada4384
+      size: 796047
   data_preprocessing:
     cmd: ./.venv/bin/python ml_pipelines_with_DVC/src/data_preprocessing.py
     deps:
     - path: data/raw/test.csv
       hash: md5
-      md5: a2bdbb8889e0b1b400eb611cedd7d651
-      size: 162098
+      md5: 9e8fd40dceb7f954cac7b925b0c17783
+      size: 196306
     - path: data/raw/train.csv
       hash: md5
-      md5: 62b9f0c4e921cec8debb427edfc9cb67
-      size: 655499
+      md5: 0a781ce1bdaba1a4f4dfe7948ada4384
+      size: 796047
     - path: ml_pipelines_with_DVC/src/data_preprocessing.py
       hash: md5
       md5: 8e003113f870d071d8f52f1ae764faae
@@ -34,12 +34,12 @@ stages:
     outs:
     - path: data/processed/test_processed.csv
       hash: md5
-      md5: e92189f61b06be6eab4e25bff73ad775
-      size: 110580
+      md5: 5bf0f5ddb6bc824f568b7c74a9e2928b
+      size: 133294
     - path: data/processed/train_processed.csv
       hash: md5
-      md5: 578781bf7e32a3d9304507a5d6e3ff09
-      size: 445254
+      md5: 2112869eab84e2fd7e98af26e8580d7e
+      size: 539014
   feature_engineering:
     cmd: ./.venv/bin/python ml_pipelines_with_DVC/src/feature_engineering.py
     deps:
