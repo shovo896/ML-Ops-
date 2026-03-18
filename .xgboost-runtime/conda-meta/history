@@ -1,0 +1,5 @@
+==> 2026-03-18 12:51:32 <==
+# cmd: /opt/anaconda3/bin/conda create -y -p /Users/Shared/ML-Ops-/.xgboost-runtime -c conda-forge llvm-openmp
+# conda version: 25.5.1
++conda-forge/osx-64::llvm-openmp-22.1.0-h0d3cbff_0
+# update specs: ['llvm-openmp']
