@@ -3,5 +3,6 @@ xgboost
 nltk 
 pandas 
 numpy
+certifi
 dvc 
-pyYAML 
+pyYAML

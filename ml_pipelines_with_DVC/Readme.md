@@ -23,3 +23,16 @@ If `import xgboost` fails with `Library not loaded: @rpath/libomp.dylib`, run:
 
 The script installs a repo-local OpenMP runtime in `../.xgboost-runtime` and
 patches the `xgboost` wheel inside `../.venv`.
+
+## macOS SSL fix
+
+If `pd.read_csv("https://...")` fails with
+`CERTIFICATE_VERIFY_FAILED`, run:
+
+```bash
+./fix_python_ssl.sh
+```
+
+The script makes the repo venv use `certifi` as its default CA bundle, which
+fixes HTTPS downloads from pandas and urllib on Python 3.13 builds that ship
+without a working OpenSSL certificate path.
