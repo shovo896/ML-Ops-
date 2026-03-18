@@ -1,13 +1,17 @@
 import numpy as np
 import pandas as pd
 
-import os
+from pathlib import Path
 
 from sklearn.feature_extraction.text import CountVectorizer
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROCESSED_DATA_DIR = PROJECT_ROOT / "data" / "processed"
+FEATURES_DATA_DIR = PROJECT_ROOT / "data" / "features"
+
 # fetch the data from data/processed
-train_data = pd.read_csv('./data/processed/train_processed.csv')
-test_data = pd.read_csv('./data/processed/test_processed.csv')
+train_data = pd.read_csv(PROCESSED_DATA_DIR / 'train_processed.csv')
+test_data = pd.read_csv(PROCESSED_DATA_DIR / 'test_processed.csv')
 
 train_data.fillna('',inplace=True)
 test_data.fillna('',inplace=True)
@@ -37,9 +41,7 @@ test_df = pd.DataFrame(X_test_bow.toarray())
 test_df['label'] = y_test
 
 # store the data inside data/features
-data_path = os.path.join("data","features")
+FEATURES_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-os.makedirs(data_path)
-
-train_df.to_csv(os.path.join(data_path,"train_bow.csv"))
-test_df.to_csv(os.path.join(data_path,"test_bow.csv"))
+train_df.to_csv(FEATURES_DATA_DIR / "train_bow.csv", index=False)
+test_df.to_csv(FEATURES_DATA_DIR / "test_bow.csv", index=False)

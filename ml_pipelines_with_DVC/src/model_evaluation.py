@@ -3,12 +3,20 @@ import pandas as pd
 
 import pickle
 import json
+from pathlib import Path
 
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score, recall_score, roc_auc_score
 
-clf = pickle.load(open('model.pkl','rb'))
-test_data = pd.read_csv('./data/features/test_bow.csv')
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+FEATURES_DATA_DIR = PROJECT_ROOT / "data" / "features"
+MODEL_PATH = PROJECT_ROOT / "model.pkl"
+METRICS_PATH = PROJECT_ROOT / "metrics.json"
+
+with MODEL_PATH.open('rb') as model_file:
+    clf = pickle.load(model_file)
+
+test_data = pd.read_csv(FEATURES_DATA_DIR / 'test_bow.csv')
 
 X_test = test_data.iloc[:,0:-1].values
 y_test = test_data.iloc[:,-1].values
@@ -29,5 +37,5 @@ metrics_dict={
     'auc':auc
 }
 
-with open('metrics.json', 'w') as file:
+with METRICS_PATH.open('w') as file:
     json.dump(metrics_dict, file, indent=4)

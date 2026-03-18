@@ -1,8 +1,9 @@
-import numpy as np
 import pandas as pd
-import os
+from pathlib import Path
 from sklearn.model_selection import train_test_split
-import yaml
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 def load_data(data_url: str) -> pd.DataFrame:
@@ -22,9 +23,10 @@ def load_data(data_url: str) -> pd.DataFrame:
 
 def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     try:
+        df = df.copy()
         df.drop(columns=['tweet_id'], inplace=True)
-        final_df = df[df['sentiment'].isin(['happiness', 'sadness'])]
-        final_df['sentiment'].replace({'happiness': 1, 'sadness': 0}, inplace=True)
+        final_df = df[df['sentiment'].isin(['happiness', 'sadness'])].copy()
+        final_df['sentiment'] = final_df['sentiment'].map({'happiness': 1, 'sadness': 0})
         return final_df
     except KeyError as e:
         print(f"Error: Missing column {e} in the dataframe.")
@@ -39,10 +41,14 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
 
 def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path: str) -> None:
     try:
-        data_path = os.path.join(data_path, 'raw')
-        os.makedirs(data_path, exist_ok=True)
-        train_data.to_csv(os.path.join(data_path, "train.csv"), index=False)
-        test_data.to_csv(os.path.join(data_path, "test.csv"), index=False)
+        base_path = Path(data_path)
+        if not base_path.is_absolute():
+            base_path = PROJECT_ROOT / base_path
+
+        raw_path = base_path / 'raw'
+        raw_path.mkdir(parents=True, exist_ok=True)
+        train_data.to_csv(raw_path / "train.csv", index=False)
+        test_data.to_csv(raw_path / "test.csv", index=False)
     except Exception as e:
         print(f"Error: An unexpected error occurred while saving the data.")
         print(e)
