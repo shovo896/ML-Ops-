@@ -25,8 +25,8 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     try:
         df = df.copy()
         df.drop(columns=['tweet_id'], inplace=True)
-        final_df = df[df['sentiment'].isin(['neutral', 'sadness'])].copy()
-        final_df['sentiment'] = final_df['sentiment'].map({'neutral': 1, 'sadness': 0})
+        final_df = df[df['sentiment'].isin(['happiness', 'sadness'])].copy()
+        final_df['sentiment'] = final_df['sentiment'].map({'happiness': 1, 'sadness': 0})
         return final_df
     except KeyError as e:
         print(f"Error: Missing column {e} in the dataframe.")
