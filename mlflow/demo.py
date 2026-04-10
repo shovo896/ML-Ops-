@@ -58,7 +58,8 @@ with mlflow.start_run():
     mlflow.log_metric("r2", r2)
     mlflow.log_metric("mae", mae)
     
-    remote_server_uri = 
+    remote_server_uri = "https://dagshub.com/shovo896/ML-Ops-.mlflow"
+    
 
 
 
