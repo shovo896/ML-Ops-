@@ -59,6 +59,12 @@ with mlflow.start_run():
     mlflow.log_metric("mae", mae)
     
     remote_server_uri = "https://dagshub.com/shovo896/ML-Ops-.mlflow"
+    mlflow.set_tracking_uri(remote_server_uri)
+    
+    if tracking_url_type != "file":
+        mlflow.sklearn.log_model(lr, "model", registered_model_name="ElasticnetWineModel")
+    else:
+        mlflow.sklearn.log_model(lr, "model")
     
 
 
