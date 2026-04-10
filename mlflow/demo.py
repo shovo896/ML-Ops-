@@ -28,6 +28,8 @@ def eval_metrics(actual, pred):
     r2 = r2_score(actual, pred)
     return rmse, mae, r2
 
+data=pd.read_csv("../mlflow/winequality-red.csv")
+
 
 
 
