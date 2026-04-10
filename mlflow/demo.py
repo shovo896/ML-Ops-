@@ -9,6 +9,7 @@ import mlflow
 import mlflow.sklearn
 import numpy as np
 import pandas as pd
+from dotenv import load_dotenv
 from mlflow.models.signature import infer_signature
 from sklearn.linear_model import ElasticNet
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -18,27 +19,32 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
 DATA_PATH = SCRIPT_DIR / "winequality-red.csv"
 DEFAULT_REMOTE_TRACKING_URI = "https://dagshub.com/shovo896/ML-Ops-.mlflow"
+
+load_dotenv(PROJECT_ROOT / ".env")
+load_dotenv(SCRIPT_DIR / ".env")
 
 
 def configure_tracking():
     tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
-    dagshub_token = os.getenv("DAGSHUB_TOKEN")
+    dagshub_token = os.getenv("DAGSHUB_USER_TOKEN") or os.getenv("DAGSHUB_TOKEN")
 
     if tracking_uri:
         mlflow.set_tracking_uri(tracking_uri)
         return mlflow.get_tracking_uri()
 
     if dagshub_token:
+        os.environ.setdefault("DAGSHUB_USER_TOKEN", dagshub_token)
         dagshub.init(repo_owner="shovo896", repo_name="ML-Ops-", mlflow=True)
-        mlflow.set_tracking_uri(DEFAULT_REMOTE_TRACKING_URI)
+        mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", DEFAULT_REMOTE_TRACKING_URI))
         return mlflow.get_tracking_uri()
 
     local_tracking_dir = SCRIPT_DIR / "mlruns"
     mlflow.set_tracking_uri(local_tracking_dir.as_uri())
     logger.warning(
-        "DAGSHUB_TOKEN is not set. Logging to the local MLflow store at %s",
+        "DAGSHUB_USER_TOKEN is not set. Logging to the local MLflow store at %s",
         local_tracking_dir,
     )
     return mlflow.get_tracking_uri()
@@ -99,7 +105,6 @@ def main():
 if __name__ == "__main__":
     main()
     
-
 
 
 

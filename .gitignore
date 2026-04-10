@@ -4,8 +4,8 @@
 
 /metrics.json
 
+.env
 .venv/
 .venv.py313-broken/
 mlflow/mlruns/
-
 
