@@ -28,7 +28,13 @@ def eval_metrics(actual, pred):
     r2 = r2_score(actual, pred)
     return rmse, mae, r2
 
-data=pd.read_csv("../mlflow/winequality-red.csv")
+data=pd.read_csv("../mlflow/winequality-red.csv",sep=";")
+
+train,test=train_test_split(data)
+train_x=train.drop(["quality"],axis=1)
+test_x=test.drop(["quality"],axis=1)
+train_y=train[["quality"]]
+test_y=test[["quality"]]
 
 
 
