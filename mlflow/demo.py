@@ -4,7 +4,6 @@ import sys
 from pathlib import Path
 from urllib.parse import urlparse
 
-import dagshub
 import mlflow
 import mlflow.sklearn
 import numpy as np
@@ -36,6 +35,13 @@ def configure_tracking():
         return mlflow.get_tracking_uri()
 
     if dagshub_token:
+        try:
+            import dagshub
+        except ImportError as exc:
+            raise RuntimeError(
+                "DagsHub logging was requested, but the 'dagshub' package is not installed "
+                "in the active Python environment."
+            ) from exc
         os.environ.setdefault("DAGSHUB_USER_TOKEN", dagshub_token)
         dagshub.init(repo_owner="shovo896", repo_name="ML-Ops-", mlflow=True)
         mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", DEFAULT_REMOTE_TRACKING_URI))
@@ -105,7 +111,6 @@ def main():
 if __name__ == "__main__":
     main()
     
-
 
 
 
