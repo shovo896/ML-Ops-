@@ -1,6 +1,5 @@
-Sure — GitHub README/notes হিসেবে upload করার মতো clean version:
 
-````md
+
 # Docker Desktop Installation Fix on Windows + WSL2 Setup
 
 ## 1. Check Docker Installation
