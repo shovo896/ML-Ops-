@@ -16,4 +16,8 @@ docker build -t shovo/my-fastapi-app .
 docker run -d -p 8000:8000 shovo/my-fastapi-app
 docker run -d -p 8000:8000 --name shovo/my-fastapi-container shovo/my-fastapi-app
 
+## push to    docker hub
+docker login
+docker push shovo/my-fastapi-app
+
 
