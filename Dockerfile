@@ -21,3 +21,6 @@ docker login
 docker push shovo/my-fastapi-app
 
 
+
+
+
